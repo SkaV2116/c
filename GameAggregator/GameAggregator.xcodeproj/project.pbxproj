@@ -1,0 +1,460 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D444C01DD5A83ACB589A05BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D562B3E40B6C9EC53F38F07 /* Assets.xcassets */; };
+		1AB490E94667D712BB4EC6A6 /* GameAggregatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D1B9BEBBC238BB35600CE5 /* GameAggregatorApp.swift */; };
+		C8E4E1AD9B345815FBD80E62 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA574018E4E20B67BC7A6C9E /* AppRouter.swift */; };
+		CAB0903558FB913FD735F8C1 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51204779A5C51DCD386A249F /* AppTheme.swift */; };
+		FAD398EC6CEA31D368BC9E00 /* View+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C89587F2616B9BD50A35EB /* View+Shake.swift */; };
+		FE749014F93FD83BC8EDF72D /* HubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465910EE6E5AEBF940988D82 /* HubView.swift */; };
+		29A371B8F0C32691DA60E76F /* HubViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E422BF984F0FA612998742 /* HubViewModel.swift */; };
+		5558CF6B5B71E1CD9E5C73BD /* GameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B345880C2509CD2EFAF8265 /* GameCardView.swift */; };
+		85B5E1873BEFD70043765C8D /* WyrazBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DE38E150748FFF13A5CC91 /* WyrazBoard.swift */; };
+		BD90905B622AD3B1090CB3A3 /* WyrazGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC08F49B4C6595BD4427F3 /* WyrazGame.swift */; };
+		3EB8B3DB671CDEB0C454C169 /* WyrazPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586EBF3481BDB55985D8908C /* WyrazPersistence.swift */; };
+		7CB997F279A2C9F1EE8AAEEF /* WyrazDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5D518E1F7EFAA1B4BACA0 /* WyrazDictionary.swift */; };
+		ED556EDE7293BFC1555A8A56 /* WyrazViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636C7730E1448086FEA4B16A /* WyrazViewModel.swift */; };
+		280A3B203828E7F3570A8EB0 /* WyrazTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B32E7CED21CB222D47CFE48 /* WyrazTileView.swift */; };
+		06F9013074C3C478CEDB618F /* WyrazBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C35AC0A3A43DE4E3C5251 /* WyrazBoardView.swift */; };
+		175C538B7680EDF1BE74ECC1 /* WyrazKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C5D96A1B34C33B08517C30 /* WyrazKeyboardView.swift */; };
+		90FDC5EBC82CC1776033E5BD /* WyrazView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F599B6AF8F1661BE3A814F /* WyrazView.swift */; };
+		B57535FD79078692FBBDCA11 /* WyrazResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291621ACC4FD4589BA43F7A8 /* WyrazResultView.swift */; };
+		BD46B74F75F06C14313F5A42 /* StarBattleLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9788B5CC0AEA89E71F4A081C /* StarBattleLevel.swift */; };
+		94A08D365C2556E94DDD4286 /* StarBattleBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8509071F0D421AF19B17041 /* StarBattleBoard.swift */; };
+		50BF5A436206D388749D15A8 /* StarBattleSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADAA51B525068E224BB7794 /* StarBattleSolver.swift */; };
+		E70D06EE03DF5F77875DA05F /* StarBattleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E346CA7147CAA700B3345A /* StarBattleGenerator.swift */; };
+		6DF41E1AEE8ED561E090F5F9 /* StarBattlePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C41DDFCC6CB910F02B9803 /* StarBattlePersistence.swift */; };
+		6B4D39E62EB251EEC788C163 /* LevelBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6773871602DF597BE1764A /* LevelBundle.swift */; };
+		F702A6BD18EA38BAA53C68AA /* EmbeddedLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDDD469CE8F30678491C395 /* EmbeddedLevels.swift */; };
+		94DE90AF6F2BF43C73685DFB /* GwiazdkiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E09A69BA2B280438F4458F0 /* GwiazdkiViewModel.swift */; };
+		1E02766926855CE3ADF5C18E /* LevelGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FF39786221FF10288FB183 /* LevelGridView.swift */; };
+		9C505B3B0D89222C14A15483 /* GwiazdkiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6CAC9649B59FF501331E11 /* GwiazdkiView.swift */; };
+		9E685B7ED4E9A8D228190E0D /* LevelSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083EF1D9CA408B644BE0AC67 /* LevelSelectView.swift */; };
+		F07186A8DD0EFC5DB37119DA /* gwiazdki_levels.json in Resources */ = {isa = PBXBuildFile; fileRef = 5F7A5BE6F26293324ADE2DF1 /* gwiazdki_levels.json */; };
+		423645A876460DF928E68140 /* wyraz_solutions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0B10F06DD7C427B72059C6AD /* wyraz_solutions.txt */; };
+		E3248451843BC0A348C37AFE /* wyraz_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 814B484657204FAC49DE90A0 /* wyraz_words.txt */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CE29BE284D8E7CDFA377A125 /* GameAggregator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameAggregator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D562B3E40B6C9EC53F38F07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D815DD2BB41FEA1DA45DC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44D1B9BEBBC238BB35600CE5 /* GameAggregatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAggregatorApp.swift; sourceTree = "<group>"; };
+		CA574018E4E20B67BC7A6C9E /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		51204779A5C51DCD386A249F /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		20C89587F2616B9BD50A35EB /* View+Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View+Shake.swift; sourceTree = "<group>"; };
+		465910EE6E5AEBF940988D82 /* HubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubView.swift; sourceTree = "<group>"; };
+		75E422BF984F0FA612998742 /* HubViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubViewModel.swift; sourceTree = "<group>"; };
+		7B345880C2509CD2EFAF8265 /* GameCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardView.swift; sourceTree = "<group>"; };
+		51DE38E150748FFF13A5CC91 /* WyrazBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazBoard.swift; sourceTree = "<group>"; };
+		55DC08F49B4C6595BD4427F3 /* WyrazGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazGame.swift; sourceTree = "<group>"; };
+		586EBF3481BDB55985D8908C /* WyrazPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazPersistence.swift; sourceTree = "<group>"; };
+		9DA5D518E1F7EFAA1B4BACA0 /* WyrazDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazDictionary.swift; sourceTree = "<group>"; };
+		636C7730E1448086FEA4B16A /* WyrazViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazViewModel.swift; sourceTree = "<group>"; };
+		2B32E7CED21CB222D47CFE48 /* WyrazTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazTileView.swift; sourceTree = "<group>"; };
+		DB8C35AC0A3A43DE4E3C5251 /* WyrazBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazBoardView.swift; sourceTree = "<group>"; };
+		04C5D96A1B34C33B08517C30 /* WyrazKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazKeyboardView.swift; sourceTree = "<group>"; };
+		20F599B6AF8F1661BE3A814F /* WyrazView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazView.swift; sourceTree = "<group>"; };
+		291621ACC4FD4589BA43F7A8 /* WyrazResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WyrazResultView.swift; sourceTree = "<group>"; };
+		9788B5CC0AEA89E71F4A081C /* StarBattleLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarBattleLevel.swift; sourceTree = "<group>"; };
+		C8509071F0D421AF19B17041 /* StarBattleBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarBattleBoard.swift; sourceTree = "<group>"; };
+		1ADAA51B525068E224BB7794 /* StarBattleSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarBattleSolver.swift; sourceTree = "<group>"; };
+		79E346CA7147CAA700B3345A /* StarBattleGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarBattleGenerator.swift; sourceTree = "<group>"; };
+		95C41DDFCC6CB910F02B9803 /* StarBattlePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarBattlePersistence.swift; sourceTree = "<group>"; };
+		AD6773871602DF597BE1764A /* LevelBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelBundle.swift; sourceTree = "<group>"; };
+		8FDDD469CE8F30678491C395 /* EmbeddedLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedLevels.swift; sourceTree = "<group>"; };
+		8E09A69BA2B280438F4458F0 /* GwiazdkiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GwiazdkiViewModel.swift; sourceTree = "<group>"; };
+		82FF39786221FF10288FB183 /* LevelGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelGridView.swift; sourceTree = "<group>"; };
+		5E6CAC9649B59FF501331E11 /* GwiazdkiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GwiazdkiView.swift; sourceTree = "<group>"; };
+		083EF1D9CA408B644BE0AC67 /* LevelSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectView.swift; sourceTree = "<group>"; };
+		5F7A5BE6F26293324ADE2DF1 /* gwiazdki_levels.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = gwiazdki_levels.json; sourceTree = "<group>"; };
+		0B10F06DD7C427B72059C6AD /* wyraz_solutions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = wyraz_solutions.txt; sourceTree = "<group>"; };
+		814B484657204FAC49DE90A0 /* wyraz_words.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = wyraz_words.txt; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		29B2D46AA747A59804D46E1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5928955287B8089ED2177128 = {
+			isa = PBXGroup;
+			children = (
+				D2553A7ED56BB6FA7D4ED2BF /* GameAggregator */,
+				BF7A2D27A78D590BDEF15AF2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BF7A2D27A78D590BDEF15AF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE29BE284D8E7CDFA377A125 /* GameAggregator.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2553A7ED56BB6FA7D4ED2BF /* GameAggregator */ = {
+			isa = PBXGroup;
+			children = (
+				8D562B3E40B6C9EC53F38F07 /* Assets.xcassets */,
+				4D815DD2BB41FEA1DA45DC65 /* Info.plist */,
+				0F64647D1C92A5F0677877F5 /* Gwiazdki */,
+				0AA0DD7ADAAA6BA12881348D /* Hub */,
+				45B877375D6D6297BAAF2860 /* Resources */,
+				000F0E5685D42807A7310EA7 /* Shared */,
+				9395890560BFF973F8870741 /* Wyraz */,
+				44D1B9BEBBC238BB35600CE5 /* GameAggregatorApp.swift */,
+				CA574018E4E20B67BC7A6C9E /* AppRouter.swift */,
+			);
+			path = GameAggregator;
+			sourceTree = "<group>";
+		};
+		0F64647D1C92A5F0677877F5 /* Gwiazdki */ = {
+			isa = PBXGroup;
+			children = (
+				A1EF31E81079E1597360F4FC /* Model */,
+				E9E46616A8A036696101C9C7 /* View */,
+				016AD146D95BDFFED0ADA3F1 /* ViewModel */,
+			);
+			path = Gwiazdki;
+			sourceTree = "<group>";
+		};
+		A1EF31E81079E1597360F4FC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9788B5CC0AEA89E71F4A081C /* StarBattleLevel.swift */,
+				C8509071F0D421AF19B17041 /* StarBattleBoard.swift */,
+				1ADAA51B525068E224BB7794 /* StarBattleSolver.swift */,
+				79E346CA7147CAA700B3345A /* StarBattleGenerator.swift */,
+				95C41DDFCC6CB910F02B9803 /* StarBattlePersistence.swift */,
+				AD6773871602DF597BE1764A /* LevelBundle.swift */,
+				8FDDD469CE8F30678491C395 /* EmbeddedLevels.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E9E46616A8A036696101C9C7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				82FF39786221FF10288FB183 /* LevelGridView.swift */,
+				5E6CAC9649B59FF501331E11 /* GwiazdkiView.swift */,
+				083EF1D9CA408B644BE0AC67 /* LevelSelectView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		016AD146D95BDFFED0ADA3F1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8E09A69BA2B280438F4458F0 /* GwiazdkiViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0AA0DD7ADAAA6BA12881348D /* Hub */ = {
+			isa = PBXGroup;
+			children = (
+				465910EE6E5AEBF940988D82 /* HubView.swift */,
+				75E422BF984F0FA612998742 /* HubViewModel.swift */,
+				7B345880C2509CD2EFAF8265 /* GameCardView.swift */,
+			);
+			path = Hub;
+			sourceTree = "<group>";
+		};
+		45B877375D6D6297BAAF2860 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5F7A5BE6F26293324ADE2DF1 /* gwiazdki_levels.json */,
+				0B10F06DD7C427B72059C6AD /* wyraz_solutions.txt */,
+				814B484657204FAC49DE90A0 /* wyraz_words.txt */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		000F0E5685D42807A7310EA7 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				51204779A5C51DCD386A249F /* AppTheme.swift */,
+				20C89587F2616B9BD50A35EB /* View+Shake.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		9395890560BFF973F8870741 /* Wyraz */ = {
+			isa = PBXGroup;
+			children = (
+				573391AB4997311D23703C26 /* Model */,
+				7D7808B28EC3EE1D9C914772 /* View */,
+				EB380DB3A9585C587220224A /* ViewModel */,
+			);
+			path = Wyraz;
+			sourceTree = "<group>";
+		};
+		573391AB4997311D23703C26 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				51DE38E150748FFF13A5CC91 /* WyrazBoard.swift */,
+				55DC08F49B4C6595BD4427F3 /* WyrazGame.swift */,
+				586EBF3481BDB55985D8908C /* WyrazPersistence.swift */,
+				9DA5D518E1F7EFAA1B4BACA0 /* WyrazDictionary.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7D7808B28EC3EE1D9C914772 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2B32E7CED21CB222D47CFE48 /* WyrazTileView.swift */,
+				DB8C35AC0A3A43DE4E3C5251 /* WyrazBoardView.swift */,
+				04C5D96A1B34C33B08517C30 /* WyrazKeyboardView.swift */,
+				20F599B6AF8F1661BE3A814F /* WyrazView.swift */,
+				291621ACC4FD4589BA43F7A8 /* WyrazResultView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EB380DB3A9585C587220224A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				636C7730E1448086FEA4B16A /* WyrazViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E757D91215D317FF5AF7029D /* GameAggregator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F707ED8CFBC457F7F618ECA6 /* Build configuration list for PBXNativeTarget "GameAggregator" */;
+			buildPhases = (
+				E7209FB05162B7572F88D05E /* Sources */,
+				29B2D46AA747A59804D46E1F /* Frameworks */,
+				66F8606E9F0A136E2228EBCB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GameAggregator;
+			productName = GameAggregator;
+			productReference = CE29BE284D8E7CDFA377A125 /* GameAggregator.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5299AC4324DC18342A8CCD96 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					E757D91215D317FF5AF7029D = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = CB7CBE0C3B42E7D081FECC31 /* Build configuration list for PBXProject "GameAggregator" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = pl;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				pl,
+				en,
+				Base,
+			);
+			mainGroup = 5928955287B8089ED2177128;
+			productRefGroup = BF7A2D27A78D590BDEF15AF2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E757D91215D317FF5AF7029D /* GameAggregator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		66F8606E9F0A136E2228EBCB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D444C01DD5A83ACB589A05BB /* Assets.xcassets in Resources */,
+				F07186A8DD0EFC5DB37119DA /* gwiazdki_levels.json in Resources */,
+				423645A876460DF928E68140 /* wyraz_solutions.txt in Resources */,
+				E3248451843BC0A348C37AFE /* wyraz_words.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E7209FB05162B7572F88D05E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1AB490E94667D712BB4EC6A6 /* GameAggregatorApp.swift in Sources */,
+				C8E4E1AD9B345815FBD80E62 /* AppRouter.swift in Sources */,
+				CAB0903558FB913FD735F8C1 /* AppTheme.swift in Sources */,
+				FAD398EC6CEA31D368BC9E00 /* View+Shake.swift in Sources */,
+				FE749014F93FD83BC8EDF72D /* HubView.swift in Sources */,
+				29A371B8F0C32691DA60E76F /* HubViewModel.swift in Sources */,
+				5558CF6B5B71E1CD9E5C73BD /* GameCardView.swift in Sources */,
+				85B5E1873BEFD70043765C8D /* WyrazBoard.swift in Sources */,
+				BD90905B622AD3B1090CB3A3 /* WyrazGame.swift in Sources */,
+				3EB8B3DB671CDEB0C454C169 /* WyrazPersistence.swift in Sources */,
+				7CB997F279A2C9F1EE8AAEEF /* WyrazDictionary.swift in Sources */,
+				ED556EDE7293BFC1555A8A56 /* WyrazViewModel.swift in Sources */,
+				280A3B203828E7F3570A8EB0 /* WyrazTileView.swift in Sources */,
+				06F9013074C3C478CEDB618F /* WyrazBoardView.swift in Sources */,
+				175C538B7680EDF1BE74ECC1 /* WyrazKeyboardView.swift in Sources */,
+				90FDC5EBC82CC1776033E5BD /* WyrazView.swift in Sources */,
+				B57535FD79078692FBBDCA11 /* WyrazResultView.swift in Sources */,
+				BD46B74F75F06C14313F5A42 /* StarBattleLevel.swift in Sources */,
+				94A08D365C2556E94DDD4286 /* StarBattleBoard.swift in Sources */,
+				50BF5A436206D388749D15A8 /* StarBattleSolver.swift in Sources */,
+				E70D06EE03DF5F77875DA05F /* StarBattleGenerator.swift in Sources */,
+				6DF41E1AEE8ED561E090F5F9 /* StarBattlePersistence.swift in Sources */,
+				6B4D39E62EB251EEC788C163 /* LevelBundle.swift in Sources */,
+				F702A6BD18EA38BAA53C68AA /* EmbeddedLevels.swift in Sources */,
+				94DE90AF6F2BF43C73685DFB /* GwiazdkiViewModel.swift in Sources */,
+				1E02766926855CE3ADF5C18E /* LevelGridView.swift in Sources */,
+				9C505B3B0D89222C14A15483 /* GwiazdkiView.swift in Sources */,
+				9E685B7ED4E9A8D228190E0D /* LevelSelectView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8EE6B6ADC095CDC56BE16A9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSET_CATALOG_COMPILER_OPTIMIZATION = time;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C25F4F6540DF31069317F7C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSET_CATALOG_COMPILER_OPTIMIZATION = space;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5C1FCF821166A8E947DC58DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSTETS_CATALOG_APP_ICON = AppIcon;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.miniapps.GameAggregator";
+				INFOPLIST_FILE = GameAggregator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SWIFT_VERSION = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRICT_CONCURRENCY_CHECKING = targeted;
+				SUPPORTED_PLATFORMS = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		D8A34C63742B602B66E1CD36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSTETS_CATALOG_APP_ICON = AppIcon;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.miniapps.GameAggregator";
+				INFOPLIST_FILE = GameAggregator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SWIFT_VERSION = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRICT_CONCURRENCY_CHECKING = targeted;
+				SUPPORTED_PLATFORMS = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CB7CBE0C3B42E7D081FECC31 /* Build configuration list for PBXProject "GameAggregator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8EE6B6ADC095CDC56BE16A9E /* Debug */,
+				C25F4F6540DF31069317F7C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F707ED8CFBC457F7F618ECA6 /* Build configuration list for PBXNativeTarget "GameAggregator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C1FCF821166A8E947DC58DE /* Debug */,
+				D8A34C63742B602B66E1CD36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 5299AC4324DC18342A8CCD96 /* Project object */;
+}
