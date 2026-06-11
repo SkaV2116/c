@@ -118,3 +118,31 @@ export function clearBoardState(id: number) {
 }
 
 function deepClone<T>(v: T): T { return JSON.parse(JSON.stringify(v)) }
+
+// ── Timer persistence ──────────────────────────────────────────────────────
+const TIMES_KEY = 'gwiazdki_times'
+
+function loadAllTimes(): Record<number, number> {
+  try { return JSON.parse(localStorage.getItem(TIMES_KEY) ?? '{}') }
+  catch { return {} }
+}
+
+export function saveLevelTime(id: number, seconds: number) {
+  const times = loadAllTimes()
+  if (times[id] === undefined || seconds < times[id]) {
+    times[id] = seconds
+    localStorage.setItem(TIMES_KEY, JSON.stringify(times))
+  }
+}
+
+export function loadLevelTime(id: number): number | null {
+  return loadAllTimes()[id] ?? null
+}
+
+export function loadAllLevelTimes(): Record<number, number> {
+  return loadAllTimes()
+}
+
+export function formatTime(s: number): string {
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
+}

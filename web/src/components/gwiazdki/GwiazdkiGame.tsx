@@ -1,8 +1,9 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import type { Level, BoardState, CellMark } from '../../games/gwiazdki'
 import {
-  emptyBoard, placeStar, removeStar, toggleManualX, checkSolved,
-  markCompleted, saveBoardState, loadBoardState, clearBoardState
+  emptyBoard, placeStar, removeStar, checkSolved,
+  markCompleted, saveBoardState, loadBoardState, clearBoardState,
+  saveLevelTime, loadLevelTime, formatTime
 } from '../../games/gwiazdki'
 import levelsData from '../../data/gwiazdki_levels.json'
 
@@ -17,48 +18,58 @@ const REGION_COLORS = [
 interface Props {
   levelId: number
   onBack: () => void
-  onNext: () => void
   onMenu: () => void
 }
 
-export default function GwiazdkiGame({ levelId, onBack, onNext, onMenu }: Props) {
+export default function GwiazdkiGame({ levelId, onBack, onMenu }: Props) {
   const level = allLevels.find(l => l.id === levelId)!
   const [board, setBoard] = useState<BoardState>(() => loadBoardState(levelId) ?? emptyBoard(level.gridSize))
-  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const didLongPress = useRef(false)
+  const [elapsed, setElapsed] = useState(0)
+  const elapsedRef = useRef(0)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const n = level.gridSize
   const boardSize = Math.min(window.innerWidth - 28, window.innerHeight - 180)
   const cellSize = boardSize / n
 
-  const handlePointerDown = useCallback((row: number, col: number) => {
-    didLongPress.current = false
-    longPressTimer.current = setTimeout(() => {
-      didLongPress.current = true
-      setBoard(b => {
-        const mark = b.marks[row][col]
-        if (mark === 'empty' || mark === 'manualX') {
-          const nb = toggleManualX(b, row, col)
-          saveBoardState(levelId, nb)
-          return nb
-        }
-        return b
-      })
-    }, 420)
+  // Start timer when level loads, reset between levels
+  useEffect(() => {
+    elapsedRef.current = 0
+    setElapsed(0)
+    timerRef.current = setInterval(() => {
+      elapsedRef.current += 1
+      setElapsed(elapsedRef.current)
+    }, 1000)
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [levelId])
 
-  const handlePointerUp = useCallback((row: number, col: number) => {
-    if (longPressTimer.current) clearTimeout(longPressTimer.current)
-    if (didLongPress.current) return
+  // Stop timer and save when solved
+  useEffect(() => {
+    if (board.isSolved) {
+      if (timerRef.current) clearInterval(timerRef.current)
+      saveLevelTime(levelId, elapsedRef.current)
+    }
+  }, [board.isSolved, levelId])
 
+  // Tap cycle: empty → manualX → star → empty
+  const handleTap = useCallback((row: number, col: number) => {
     setBoard(b => {
       if (b.isSolved) return b
       const mark: CellMark = b.marks[row][col]
+
+      if (mark === 'autoX') return b  // auto-X can't be tapped
+
       let nb: BoardState
-      if (mark === 'star') {
-        nb = removeStar(b, row, col)
-      } else if (mark === 'empty') {
+      if (mark === 'empty') {
+        // empty → manualX
+        const clone = JSON.parse(JSON.stringify(b)) as BoardState
+        clone.marks[row][col] = 'manualX'
+        saveBoardState(levelId, clone)
+        return clone
+      } else if (mark === 'manualX') {
+        // manualX → star (with auto-X propagation)
         nb = placeStar(b, row, col, n)
+        nb.moveCount++
         const solved = checkSolved(nb, level)
         if (solved) {
           nb = { ...nb, isSolved: true }
@@ -66,17 +77,27 @@ export default function GwiazdkiGame({ levelId, onBack, onNext, onMenu }: Props)
           clearBoardState(levelId)
           return nb
         }
+        saveBoardState(levelId, nb)
+        return nb
       } else {
-        return b
+        // star → empty (remove star and its auto-X)
+        nb = removeStar(b, row, col)
+        nb.moveCount++
+        saveBoardState(levelId, nb)
+        return nb
       }
-      nb.moveCount++
-      saveBoardState(levelId, nb)
-      return nb
     })
   }, [n, level, levelId])
 
   const reset = () => {
     clearBoardState(levelId)
+    elapsedRef.current = 0
+    setElapsed(0)
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      elapsedRef.current += 1
+      setElapsed(elapsedRef.current)
+    }, 1000)
     setBoard(emptyBoard(n))
   }
 
@@ -101,6 +122,8 @@ export default function GwiazdkiGame({ levelId, onBack, onNext, onMenu }: Props)
     return null
   }
 
+  const bestTime = board.isSolved ? loadLevelTime(levelId) : null
+
   return (
     <div className="screen gwiazdki-game">
       <div className="navbar">
@@ -112,7 +135,7 @@ export default function GwiazdkiGame({ levelId, onBack, onNext, onMenu }: Props)
       <div className="gwiazdki-info">
         <span>Poziom {level.id}</span>
         <span>Plansza {n}×{n}</span>
-        <span>{board.moveCount} ruchów</span>
+        <span className="gwiazdki-timer">⏱ {formatTime(elapsed)}</span>
       </div>
 
       <div className="gwiazdki-board-wrap">
@@ -140,9 +163,7 @@ export default function GwiazdkiGame({ levelId, onBack, onNext, onMenu }: Props)
                   fontSize: cellSize * 0.52,
                   ...getCellBorders(row, col),
                 }}
-                onPointerDown={() => handlePointerDown(row, col)}
-                onPointerUp={() => handlePointerUp(row, col)}
-                onPointerLeave={() => { if (longPressTimer.current) clearTimeout(longPressTimer.current) }}
+                onPointerDown={(e) => { e.preventDefault(); handleTap(row, col) }}
               >
                 {markContent(mark)}
               </div>
@@ -157,11 +178,16 @@ export default function GwiazdkiGame({ levelId, onBack, onNext, onMenu }: Props)
             <div className="success-emoji">⭐</div>
             <div className="success-title">Brawo!</div>
             <div className="success-sub">Poziom {levelId} ukończony!</div>
+            <div className="success-time">⏱ {formatTime(elapsedRef.current)}</div>
+            {bestTime !== null && bestTime < elapsedRef.current && (
+              <div className="success-best">Najlepszy: {formatTime(bestTime)}</div>
+            )}
+            {bestTime !== null && bestTime >= elapsedRef.current && (
+              <div className="success-best success-best-new">🏆 Nowy rekord!</div>
+            )}
             <div className="success-btns">
-              <button className="btn-secondary" onClick={onMenu}>Menu</button>
-              {levelId < 200 && (
-                <button className="btn-yellow" onClick={onNext}>Dalej →</button>
-              )}
+              <button className="btn-secondary" onClick={onMenu}>Hub</button>
+              <button className="btn-yellow" onClick={onBack}>Dalej →</button>
             </div>
           </div>
         </div>

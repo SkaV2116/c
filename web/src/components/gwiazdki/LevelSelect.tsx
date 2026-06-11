@@ -1,4 +1,4 @@
-import { loadCompleted } from '../../games/gwiazdki'
+import { loadCompleted, loadAllLevelTimes, formatTime } from '../../games/gwiazdki'
 import levelsData from '../../data/gwiazdki_levels.json'
 
 const levels = (levelsData as any).levels as { id: number; gridSize: number }[]
@@ -10,6 +10,7 @@ interface Props {
 
 export default function LevelSelect({ onBack, onLevel }: Props) {
   const completed = loadCompleted()
+  const times = loadAllLevelTimes()
   const total = levels.length
 
   return (
@@ -37,6 +38,9 @@ export default function LevelSelect({ onBack, onLevel }: Props) {
               >
                 {done ? '⭐' : unlocked ? level.id : '🔒'}
                 <span className="level-btn-size">{level.gridSize}×{level.gridSize}</span>
+                {done && times[level.id] !== undefined && (
+                  <span className="level-btn-time">{formatTime(times[level.id])}</span>
+                )}
               </button>
             )
           })}

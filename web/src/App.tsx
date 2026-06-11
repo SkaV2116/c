@@ -31,7 +31,6 @@ export default function App() {
         <GwiazdkiGame
           levelId={screen.levelId}
           onBack={back}
-          onNext={() => go({ id: 'gwiazdki-game', levelId: screen.levelId + 1 })}
           onMenu={() => go({ id: 'hub' })}
         />
       )
