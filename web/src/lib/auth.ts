@@ -32,21 +32,17 @@ async function generatePlayerId(): Promise<string> {
 }
 
 export async function register(username: string, password: string): Promise<Player> {
-  // Check username uniqueness first
-  const usernameDoc = await getDoc(doc(db, 'usernames', username.toLowerCase()))
-  if (usernameDoc.exists()) {
-    throw new Error('Ta nazwa jest już zajęta')
-  }
-
-  // Create Firebase Auth account
+  // Create Firebase Auth account first — Firebase guarantees email (=username) uniqueness
   let userCred
   try {
     userCred = await createUserWithEmailAndPassword(auth, toEmail(username), password)
   } catch (e: any) {
     if (e.code === 'auth/email-already-in-use') throw new Error('Ta nazwa jest już zajęta')
+    if (e.code === 'auth/weak-password') throw new Error('Hasło musi mieć co najmniej 8 znaków')
     throw new Error('Błąd rejestracji. Spróbuj ponownie.')
   }
 
+  // Now authenticated — generate unique player ID
   const uid = userCred.user.uid
   const playerId = await generatePlayerId()
 
