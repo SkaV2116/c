@@ -4,6 +4,7 @@ import {
   freshBoard, evaluateGuess, isValidWord, todaysSolution,
   loadBoard, saveBoard, updateStreak
 } from '../../games/wyraz'
+import { syncWyrazProgress } from '../../lib/gameSync'
 
 const KEYBOARD_ROWS = [
   ['Q','W','E','R','T','Y','U','I','O','P'],
@@ -12,9 +13,9 @@ const KEYBOARD_ROWS = [
   ['Ą','Ć','Ę','Ł','Ń','Ś','Ź','Ż'],
 ]
 
-interface Props { onBack: () => void }
+interface Props { uid: string; onBack: () => void }
 
-export default function WyrazView({ onBack }: Props) {
+export default function WyrazView({ uid, onBack }: Props) {
   const solution = todaysSolution()
   const [board, setBoard] = useState<WyrazBoard>(() => loadBoard() ?? freshBoard())
   const [toast, setToast] = useState<string | null>(null)
@@ -69,6 +70,7 @@ export default function WyrazView({ onBack }: Props) {
         setIsAnimating(false)
         if (won) {
           updateStreak(true)
+          syncWyrazProgress(uid)
           setTimeout(() => setShowResult(true), 400)
         } else if (row + 1 >= 6) {
           showToast(solution)

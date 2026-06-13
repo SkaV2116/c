@@ -6,6 +6,7 @@ import {
   saveLevelTime, loadLevelTime, formatTime
 } from '../../games/gwiazdki'
 import levelsData from '../../data/gwiazdki_levels.json'
+import { syncGwiazdkiProgress } from '../../lib/gameSync'
 
 const allLevels: Level[] = (levelsData as { levels: Level[] }).levels
 
@@ -16,12 +17,13 @@ const REGION_COLORS = [
 ]
 
 interface Props {
+  uid: string
   levelId: number
   onBack: () => void
   onMenu: () => void
 }
 
-export default function GwiazdkiGame({ levelId, onBack, onMenu }: Props) {
+export default function GwiazdkiGame({ uid, levelId, onBack, onMenu }: Props) {
   const level = allLevels.find(l => l.id === levelId)!
   const [board, setBoard] = useState<BoardState>(() => loadBoardState(levelId) ?? emptyBoard(level.gridSize))
   const [elapsed, setElapsed] = useState(0)
@@ -43,13 +45,14 @@ export default function GwiazdkiGame({ levelId, onBack, onMenu }: Props) {
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [levelId])
 
-  // Stop timer and save when solved
+  // Stop timer and save when solved, then sync to Firestore
   useEffect(() => {
     if (board.isSolved) {
       if (timerRef.current) clearInterval(timerRef.current)
       saveLevelTime(levelId, elapsedRef.current)
+      syncGwiazdkiProgress(uid)
     }
-  }, [board.isSolved, levelId])
+  }, [board.isSolved, levelId, uid])
 
   // Tap cycle: empty → manualX → star → empty
   const handleTap = useCallback((row: number, col: number) => {

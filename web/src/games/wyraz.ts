@@ -1,4 +1,5 @@
 import { SOLUTIONS, VALID_WORDS } from '../data/words'
+import { userKey } from '../lib/userStore'
 
 export type TileState = 'empty' | 'typed' | 'correct' | 'present' | 'absent'
 export interface Tile { letter: string; state: TileState }
@@ -61,13 +62,9 @@ export function evaluateGuess(guess: string, solution: string): TileState[] {
   return states
 }
 
-const STORAGE_KEY = 'wyraz_board'
-const STREAK_KEY = 'wyraz_streak'
-const LAST_WIN_KEY = 'wyraz_lastwin'
-
 export function loadBoard(): WyrazBoard | null {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    const raw = localStorage.getItem(userKey('wyraz_board'))
     if (!raw) return null
     const board: WyrazBoard = JSON.parse(raw)
     if (board.dateKey !== todayKey()) return null
@@ -76,20 +73,20 @@ export function loadBoard(): WyrazBoard | null {
 }
 
 export function saveBoard(board: WyrazBoard) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(board))
+  localStorage.setItem(userKey('wyraz_board'), JSON.stringify(board))
 }
 
 export function loadStreak(): number {
-  return parseInt(localStorage.getItem(STREAK_KEY) ?? '0', 10)
+  return parseInt(localStorage.getItem(userKey('wyraz_streak')) ?? '0', 10)
 }
 
 export function updateStreak(won: boolean) {
   if (!won) return
   const today = todayKey()
   const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10)
-  const lastWin = localStorage.getItem(LAST_WIN_KEY) ?? ''
+  const lastWin = localStorage.getItem(userKey('wyraz_lastwin')) ?? ''
   const cur = loadStreak()
   const newStreak = (lastWin === yesterday || lastWin === today) ? cur + 1 : 1
-  localStorage.setItem(STREAK_KEY, String(newStreak))
-  localStorage.setItem(LAST_WIN_KEY, today)
+  localStorage.setItem(userKey('wyraz_streak'), String(newStreak))
+  localStorage.setItem(userKey('wyraz_lastwin'), today)
 }

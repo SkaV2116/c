@@ -5,6 +5,8 @@ import LevelSelect from './components/gwiazdki/LevelSelect'
 import GwiazdkiGame from './components/gwiazdki/GwiazdkiGame'
 import AuthScreen from './components/AuthScreen'
 import { onAuthChange, loadPlayerProfile, type Player } from './lib/auth'
+import { setCurrentUid } from './lib/userStore'
+import { loadProgressFromFirestore } from './lib/gameSync'
 
 type Screen =
   | { id: 'hub' }
@@ -21,8 +23,13 @@ export default function App() {
     const unsub = onAuthChange(async (user) => {
       if (user) {
         const p = await loadPlayerProfile(user)
+        if (p) {
+          setCurrentUid(p.uid)
+          await loadProgressFromFirestore(p.uid)
+        }
         setPlayer(p)
       } else {
+        setCurrentUid('')
         setPlayer(null)
       }
       setAuthLoading(false)
@@ -42,8 +49,14 @@ export default function App() {
     )
   }
 
+  const handleAuth = async (p: Player) => {
+    setCurrentUid(p.uid)
+    await loadProgressFromFirestore(p.uid)
+    setPlayer(p)
+  }
+
   if (!player) {
-    return <AuthScreen onAuth={setPlayer} />
+    return <AuthScreen onAuth={handleAuth} />
   }
 
   const go = (s: Screen) => setScreen(s)
@@ -56,12 +69,13 @@ export default function App() {
     case 'hub':
       return <Hub player={player} onWyraz={() => go({ id: 'wyraz' })} onGwiazdki={() => go({ id: 'gwiazdki-menu' })} onLogout={() => setPlayer(null)} />
     case 'wyraz':
-      return <WyrazView onBack={back} />
+      return <WyrazView uid={player.uid} onBack={back} />
     case 'gwiazdki-menu':
       return <LevelSelect onBack={back} onLevel={(id) => go({ id: 'gwiazdki-game', levelId: id })} />
     case 'gwiazdki-game':
       return (
         <GwiazdkiGame
+          uid={player.uid}
           levelId={screen.levelId}
           onBack={back}
           onMenu={() => go({ id: 'hub' })}

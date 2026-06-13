@@ -10,6 +10,8 @@ export interface BoardState {
   moveCount: number
 }
 
+import { userKey } from '../lib/userStore'
+
 export function emptyBoard(size: number): BoardState {
   return {
     marks: Array.from({ length: size }, () => Array(size).fill('empty')),
@@ -87,43 +89,38 @@ export function checkSolved(board: BoardState, level: Level): boolean {
   return true
 }
 
-const COMPLETED_KEY = 'gwiazdki_completed'
-const BOARD_PREFIX = 'gwiazdki_board_'
-
 export function loadCompleted(): Set<number> {
   try {
-    return new Set(JSON.parse(localStorage.getItem(COMPLETED_KEY) ?? '[]'))
+    return new Set(JSON.parse(localStorage.getItem(userKey('gwiazdki_completed')) ?? '[]'))
   } catch { return new Set() }
 }
 
 export function markCompleted(id: number) {
   const s = loadCompleted()
   s.add(id)
-  localStorage.setItem(COMPLETED_KEY, JSON.stringify([...s]))
+  localStorage.setItem(userKey('gwiazdki_completed'), JSON.stringify([...s]))
 }
 
 export function saveBoardState(id: number, board: BoardState) {
-  localStorage.setItem(BOARD_PREFIX + id, JSON.stringify(board))
+  localStorage.setItem(userKey(`gwiazdki_board_${id}`), JSON.stringify(board))
 }
 
 export function loadBoardState(id: number): BoardState | null {
   try {
-    const raw = localStorage.getItem(BOARD_PREFIX + id)
+    const raw = localStorage.getItem(userKey(`gwiazdki_board_${id}`))
     return raw ? JSON.parse(raw) : null
   } catch { return null }
 }
 
 export function clearBoardState(id: number) {
-  localStorage.removeItem(BOARD_PREFIX + id)
+  localStorage.removeItem(userKey(`gwiazdki_board_${id}`))
 }
 
 function deepClone<T>(v: T): T { return JSON.parse(JSON.stringify(v)) }
 
 // ── Timer persistence ──────────────────────────────────────────────────────
-const TIMES_KEY = 'gwiazdki_times'
-
 function loadAllTimes(): Record<number, number> {
-  try { return JSON.parse(localStorage.getItem(TIMES_KEY) ?? '{}') }
+  try { return JSON.parse(localStorage.getItem(userKey('gwiazdki_times')) ?? '{}') }
   catch { return {} }
 }
 
@@ -131,7 +128,7 @@ export function saveLevelTime(id: number, seconds: number) {
   const times = loadAllTimes()
   if (times[id] === undefined || seconds < times[id]) {
     times[id] = seconds
-    localStorage.setItem(TIMES_KEY, JSON.stringify(times))
+    localStorage.setItem(userKey('gwiazdki_times'), JSON.stringify(times))
   }
 }
 

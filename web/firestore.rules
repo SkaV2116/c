@@ -1,10 +1,13 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Players can read/write only their own profile
+    // Players can read/write only their own profile and progress
     match /players/{uid} {
       allow read: if request.auth != null && request.auth.uid == uid;
       allow create: if request.auth != null && request.auth.uid == uid;
+    }
+    match /players/{uid}/progress/{doc} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
     }
     // Username registry: anyone logged in can read (for uniqueness check), only owner can write
     match /usernames/{username} {
