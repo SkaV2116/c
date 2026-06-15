@@ -47,7 +47,7 @@ export default function Hub({ player, onWyraz, onGwiazdki, onLogout }: Props) {
       )}
 
       <div className="hub-header">
-        <div className="hub-title">Mini Gry</div>
+        <div className="hub-title">MiniGamesIQ</div>
       </div>
 
       <div className="hub-cards">

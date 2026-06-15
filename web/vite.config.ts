@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons/*.png'],
       manifest: {
-        name: 'Mini Gry',
-        short_name: 'Mini Gry',
-        description: 'Wyraz i Gwiazdki – mini gry logiczne',
+        name: 'MiniGamesIQ',
+        short_name: 'MiniGamesIQ',
+        description: 'MiniGamesIQ – logiczne mini gry: Wyraz i Gwiazdki',
         theme_color: '#1c1c1e',
         background_color: '#1c1c1e',
         display: 'standalone',

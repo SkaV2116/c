@@ -45,7 +45,7 @@ export default function AuthScreen({ onAuth }: Props) {
     <div className="screen auth-screen">
       <div className="auth-logo">
         <div className="auth-logo-icon">🎮</div>
-        <div className="auth-logo-title">Mini Gry</div>
+        <div className="auth-logo-title">MiniGamesIQ</div>
       </div>
 
       <div className="auth-card">
