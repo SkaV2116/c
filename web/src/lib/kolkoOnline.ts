@@ -70,7 +70,7 @@ export async function createOnlineGame(
     currentRound: 1,
     roundsWon: { [creator.uid]: 0, [opponentUid]: 0 },
     board: emptyBoard(),
-    currentTurnUid: creator.uid,
+    currentTurnUid: opponentUid,  // invited player (O) goes first in round 1
     xUid: creator.uid,  // creator is X in round 1
     endGameRequestUid: null,
     createdAt: now,

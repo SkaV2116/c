@@ -73,8 +73,13 @@ export default function KolkoOnlineSetup({ player, onBack, onGameStarted }: Prop
           setError(`Gracz ${opponent.username} odrzucił zaproszenie`)
         }
       })
-    } catch (e) {
-      setError('Błąd wysyłania zaproszenia. Spróbuj ponownie.')
+    } catch (e: any) {
+      console.error('createOnlineGame error:', e)
+      if (e?.code === 'permission-denied') {
+        setError('Brak uprawnień — administrator musi zaktualizować reguły Firestore.')
+      } else {
+        setError('Błąd wysyłania zaproszenia. Spróbuj ponownie.')
+      }
     }
   }
 
