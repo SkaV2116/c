@@ -14,7 +14,7 @@ export default function KolkoMenu({ player, onBack, onLocalGame, onAIGame, onOnl
     <div className="screen kolko-screen">
       <div className="navbar">
         <button className="btn-back" onClick={onBack}>‹</button>
-        <span className="navbar-title">KÓŁKO I KRZYŻYK</span>
+        <span className="navbar-title">KRZYŻYK &amp; KÓŁKO</span>
         <div className="navbar-right" />
       </div>
 

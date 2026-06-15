@@ -86,7 +86,7 @@ export default function Hub({ player, onWyraz, onGwiazdki, onKolko, onLogout }: 
         <button className="game-card" onClick={onKolko}>
           <div className="card-icon" style={{ background: 'rgba(255,214,10,0.12)' }}>❌</div>
           <div className="card-text">
-            <div className="card-title">Kółko i Krzyżyk</div>
+            <div className="card-title">Krzyżyk &amp; Kółko</div>
             <div className="card-subtitle" style={{ color: '#ffd60a' }}>Lokalna gra, AI, Online PvP</div>
             <div className="card-desc">Zagraj ze znajomym lub komputerem</div>
           </div>
