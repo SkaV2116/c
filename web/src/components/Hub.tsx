@@ -7,10 +7,11 @@ interface Props {
   player: Player
   onWyraz: () => void
   onGwiazdki: () => void
+  onKolko: () => void
   onLogout: () => void
 }
 
-export default function Hub({ player, onWyraz, onGwiazdki, onLogout }: Props) {
+export default function Hub({ player, onWyraz, onGwiazdki, onKolko, onLogout }: Props) {
   const [showLogout, setShowLogout] = useState(false)
 
   const streak = loadStreak()
@@ -78,6 +79,16 @@ export default function Hub({ player, onWyraz, onGwiazdki, onLogout }: Props) {
             <div className="card-title">Gwiazdki</div>
             <div className="card-subtitle" style={{ color: '#ffd60a' }}>{progress}/200 poziomów</div>
             <div className="card-desc">Umieszczaj gwiazdki na planszy</div>
+          </div>
+          <span className="card-arrow">›</span>
+        </button>
+
+        <button className="game-card" onClick={onKolko}>
+          <div className="card-icon" style={{ background: 'rgba(255,214,10,0.12)' }}>❌</div>
+          <div className="card-text">
+            <div className="card-title">Kółko i Krzyżyk</div>
+            <div className="card-subtitle" style={{ color: '#ffd60a' }}>Lokalna gra, AI, Online PvP</div>
+            <div className="card-desc">Zagraj ze znajomym lub komputerem</div>
           </div>
           <span className="card-arrow">›</span>
         </button>
