@@ -10,6 +10,10 @@ import KolkoAIGame from './components/kolko/KolkoAIGame'
 import KolkoOnlineSetup from './components/kolko/KolkoOnlineSetup'
 import KolkoOnlineGame from './components/kolko/KolkoOnlineGame'
 import KolkoRanking from './components/kolko/KolkoRanking'
+import StatkiMenu from './components/statki/StatkiMenu'
+import StatkiSetup from './components/statki/StatkiSetup'
+import StatkiGame from './components/statki/StatkiGame'
+import StatkiRanking from './components/statki/StatkiRanking'
 import InvitationListener from './components/InvitationListener'
 import { onAuthChange, loadPlayerProfile, type Player } from './lib/auth'
 import { setCurrentUid } from './lib/userStore'
@@ -26,6 +30,10 @@ type Screen =
   | { id: 'kolko-online-setup' }
   | { id: 'kolko-online-game'; gameId: string }
   | { id: 'kolko-ranking' }
+  | { id: 'statki-menu' }
+  | { id: 'statki-setup' }
+  | { id: 'statki-game'; gameId: string }
+  | { id: 'statki-ranking' }
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>({ id: 'hub' })
@@ -82,6 +90,11 @@ export default function App() {
       screen.id === 'kolko-online-game' ||
       screen.id === 'kolko-ranking'
     ) setScreen({ id: 'kolko-menu' })
+    else if (
+      screen.id === 'statki-setup' ||
+      screen.id === 'statki-game' ||
+      screen.id === 'statki-ranking'
+    ) setScreen({ id: 'statki-menu' })
     else setScreen({ id: 'hub' })
   }
 
@@ -89,7 +102,10 @@ export default function App() {
     <>
       <InvitationListener
         player={player}
-        onGameAccepted={(id) => go({ id: 'kolko-online-game', gameId: id })}
+        onGameAccepted={(id, type) => {
+          if (type === 'kolko') go({ id: 'kolko-online-game', gameId: id })
+          else if (type === 'statki') go({ id: 'statki-game', gameId: id })
+        }}
       />
       {(() => {
         switch (screen.id) {
@@ -100,6 +116,7 @@ export default function App() {
                 onWyraz={() => go({ id: 'wyraz' })}
                 onGwiazdki={() => go({ id: 'gwiazdki-menu' })}
                 onKolko={() => go({ id: 'kolko-menu' })}
+                onStatki={() => go({ id: 'statki-menu' })}
                 onLogout={() => setPlayer(null)}
               />
             )
@@ -152,6 +169,38 @@ export default function App() {
               <KolkoRanking
                 player={player}
                 onBack={() => go({ id: 'kolko-menu' })}
+              />
+            )
+          case 'statki-menu':
+            return (
+              <StatkiMenu
+                player={player}
+                onBack={() => go({ id: 'hub' })}
+                onSetup={() => go({ id: 'statki-setup' })}
+                onRanking={() => go({ id: 'statki-ranking' })}
+              />
+            )
+          case 'statki-setup':
+            return (
+              <StatkiSetup
+                player={player}
+                onBack={() => go({ id: 'statki-menu' })}
+                onGameStarted={(id) => go({ id: 'statki-game', gameId: id })}
+              />
+            )
+          case 'statki-game':
+            return (
+              <StatkiGame
+                gameId={screen.gameId}
+                player={player}
+                onBack={() => go({ id: 'statki-menu' })}
+              />
+            )
+          case 'statki-ranking':
+            return (
+              <StatkiRanking
+                player={player}
+                onBack={() => go({ id: 'statki-menu' })}
               />
             )
         }

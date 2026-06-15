@@ -608,3 +608,162 @@ button:active { opacity: 0.7; }
 .invitation-btns { display: flex; gap: 12px; margin-top: 4px; }
 .invitation-btns .btn-secondary,
 .invitation-btns .btn-yellow { flex: 1; }
+
+/* ── STATKI ── */
+.statki-screen { background: var(--bg); overflow: hidden; }
+
+/* Menu */
+.statki-menu-content {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 24px;
+  padding: 24px 20px; overflow-y: auto;
+}
+.statki-menu-logo { font-size: 64px; padding: 8px 0; }
+.statki-menu-player { font-size: 13px; color: var(--text2); text-align: center; }
+.statki-menu-buttons {
+  display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 380px;
+}
+.statki-menu-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px; background: var(--surface); border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.07); width: 100%; text-align: left;
+  transition: transform 0.1s;
+}
+.statki-menu-btn:active { transform: scale(0.98); }
+.statki-menu-btn-icon { font-size: 28px; flex-shrink: 0; }
+.statki-menu-btn-text { flex: 1; min-width: 0; }
+.statki-menu-btn-title { font-size: 17px; font-weight: 700; }
+.statki-menu-btn-desc { font-size: 13px; color: var(--text2); }
+.statki-menu-btn-arrow { font-size: 22px; color: var(--text3); }
+
+.statki-game-content {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 16px 12px; overflow-y: auto; gap: 12px;
+}
+
+/* Game board */
+.statki-board-wrap { display: flex; flex-direction: column; gap: 12px; padding: 0 8px; }
+.statki-grid-label { font-size: 11px; color: #888; text-align: center; margin-bottom: 4px; }
+.statki-grid-section { display: flex; flex-direction: column; }
+
+.statki-grid-with-headers {
+  display: grid;
+  gap: 0;
+}
+.statki-corner { }
+.statki-col-header, .statki-row-header {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: #888;
+}
+.statki-grid {
+  display: grid;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.statki-grid-opponent .statki-cell:not(.hit):not(.miss):not(.disabled) { cursor: crosshair; }
+.statki-cell {
+  aspect-ratio: 1;
+  border: 0.5px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(8px, 2.5vw, 16px);
+  transition: background 0.15s;
+  background: #1a2a3a;
+}
+.statki-grid-opponent .statki-cell:not(.hit):not(.miss):hover { background: #2a4a6a; }
+.statki-cell.ship { background: #1e5f8e55; }
+.statki-cell.hit { background: #c0392b88; }
+.statki-cell.miss { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); }
+.statki-cell.sunk { background: #c0392b; }
+.statki-cell.preview-valid { background: rgba(30,144,255,0.4); }
+.statki-cell.preview-invalid { background: rgba(255,50,50,0.4); }
+
+/* Placement ship list */
+.statki-ship-list { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 12px; justify-content: center; }
+.statki-ship-item {
+  display: flex; gap: 2px; cursor: pointer; padding: 6px;
+  border-radius: 4px; border: 1.5px solid transparent;
+}
+.statki-ship-item.selected { border-color: #1e90ff; }
+.statki-ship-item.placed { opacity: 0.35; }
+.statki-ship-cell { width: 18px; height: 18px; background: #1e5f8e; border-radius: 2px; }
+
+/* Placement controls */
+.statki-placement-controls {
+  display: flex; gap: 8px; padding: 8px 12px;
+  position: sticky; bottom: 0; background: #1c1c1e;
+}
+.statki-placement-controls button { flex: 1; }
+.statki-placement-controls button:disabled { opacity: 0.4; }
+
+/* Status bar */
+.statki-status {
+  text-align: center; padding: 8px; font-size: 14px;
+  color: #ffd60a; font-weight: 600;
+}
+.statki-status-my-turn { color: #1e90ff; }
+.statki-score {
+  display: flex; justify-content: center; gap: 24px;
+  font-size: 13px; color: #aaa; padding: 4px 0;
+}
+.statki-game-header { text-align: center; font-size: 13px; color: var(--text2); }
+.statki-game-header strong { color: var(--text); }
+
+/* Setup form */
+.statki-fleet-display {
+  display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: var(--text2);
+}
+.statki-config-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.statki-config-btn {
+  flex: 1; min-width: 90px;
+  padding: 10px 8px; border-radius: 10px;
+  background: var(--surf2); color: var(--text);
+  font-size: 14px; font-weight: 600;
+  border: 1.5px solid transparent;
+}
+.statki-config-btn-active { border-color: #1e90ff; color: #1e90ff; }
+.statki-size-btns { display: flex; gap: 8px; }
+.statki-size-btn {
+  flex: 1; padding: 12px; border-radius: 10px;
+  background: var(--surf2); color: var(--text);
+  font-size: 16px; font-weight: 700; border: 1.5px solid transparent;
+}
+.statki-size-btn-active { border-color: #1e90ff; color: #1e90ff; }
+.statki-custom-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0; border-bottom: 1px solid #222;
+}
+.statki-custom-label { font-size: 14px; }
+.statki-counter { display: flex; align-items: center; gap: 12px; }
+.statki-counter button {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--surf2); color: var(--text); font-size: 18px; font-weight: 700;
+}
+.statki-counter button:disabled { opacity: 0.3; }
+.statki-counter-val { min-width: 20px; text-align: center; font-weight: 700; }
+.statki-custom-hint { font-size: 12px; color: var(--text3); }
+
+/* Ranking table */
+.statki-ranking-content {
+  flex: 1; padding: 16px 12px; overflow-y: auto;
+}
+.statki-ranking-wrap { overflow-x: auto; }
+.statki-ranking-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.statki-ranking-table th { color: #888; font-weight: 500; padding: 6px 4px; border-bottom: 1px solid #333; }
+.statki-ranking-table td { padding: 8px 4px; border-bottom: 1px solid #222; text-align: center; }
+.statki-ranking-row-me { background: rgba(30,144,255,0.12); }
+
+/* Instructions modal */
+.statki-instr-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center; z-index: 100; padding: 16px;
+}
+.statki-instr-box {
+  background: var(--surface); border-radius: 16px; padding: 24px 20px;
+  max-width: 420px; width: 100%; max-height: 85vh; overflow-y: auto;
+}
+.statki-instr-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; text-align: center; }
+.statki-instr-section { margin-bottom: 16px; }
+.statki-instr-section h4 { font-size: 14px; font-weight: 700; color: #1e90ff; margin-bottom: 6px; }
+.statki-instr-section p, .statki-instr-section li { font-size: 13px; color: var(--text2); line-height: 1.5; }
+.statki-instr-section ul { padding-left: 18px; }

@@ -29,10 +29,12 @@ export interface OnlineGame {
 
 export interface Invitation {
   gameId: string
+  gameType: 'kolko' | 'statki'
   creatorUid: string
   creatorUsername: string
   creatorPlayerId: string
-  totalRounds: number
+  totalRounds?: number            // kolko-only, optional
+  settingsDisplay: string         // e.g. "3 rundy" or "10×10 · Polski Standard"
   createdAt: number
 }
 
@@ -82,10 +84,12 @@ export async function createOnlineGame(
   // Create invitation
   const invitation: Invitation = {
     gameId,
+    gameType: 'kolko',
     creatorUid: creator.uid,
     creatorUsername: creator.username,
     creatorPlayerId: creator.playerId,
     totalRounds,
+    settingsDisplay: totalRounds === 0 ? 'Bez limitu rund' : `${totalRounds} ${totalRounds === 1 ? 'runda' : 'rundy'}`,
     createdAt: now,
   }
   await setDoc(doc(db, 'invitations', opponentUid, 'pending', gameId), invitation)

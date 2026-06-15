@@ -6,10 +6,11 @@ import {
   declineInvitation,
   type Invitation,
 } from '../lib/kolkoOnline'
+import { acceptStatkiInvitation, declineStatkiInvitation } from '../lib/statkiOnline'
 
 interface Props {
   player: Player
-  onGameAccepted: (gameId: string) => void
+  onGameAccepted: (gameId: string, gameType: 'kolko' | 'statki') => void
 }
 
 export default function InvitationListener({ player, onGameAccepted }: Props) {
@@ -25,12 +26,18 @@ export default function InvitationListener({ player, onGameAccepted }: Props) {
 
   const inv = invitations[0]
 
+  const gameType = inv.gameType ?? 'kolko'
+
   async function handleAccept() {
     if (processing) return
     setProcessing(inv.gameId)
     try {
-      await acceptInvitation(inv.gameId, player.uid)
-      onGameAccepted(inv.gameId)
+      if (gameType === 'statki') {
+        await acceptStatkiInvitation(inv.gameId, player.uid)
+      } else {
+        await acceptInvitation(inv.gameId, player.uid)
+      }
+      onGameAccepted(inv.gameId, gameType)
     } catch {
       setProcessing(null)
     }
@@ -40,16 +47,15 @@ export default function InvitationListener({ player, onGameAccepted }: Props) {
     if (processing) return
     setProcessing(inv.gameId)
     try {
-      await declineInvitation(inv.gameId, player.uid)
+      if (gameType === 'statki') {
+        await declineStatkiInvitation(inv.gameId, player.uid)
+      } else {
+        await declineInvitation(inv.gameId, player.uid)
+      }
       setProcessing(null)
     } catch {
       setProcessing(null)
     }
-  }
-
-  function getRoundsLabel(): string {
-    if (inv.totalRounds === 0) return 'Bez limitu rund'
-    return `${inv.totalRounds} ${inv.totalRounds === 1 ? 'runda' : inv.totalRounds < 5 ? 'rundy' : 'rund'}`
   }
 
   return (
@@ -59,7 +65,9 @@ export default function InvitationListener({ player, onGameAccepted }: Props) {
         <div className="invitation-from">
           Od: <strong>{inv.creatorUsername}</strong> #{inv.creatorPlayerId}
         </div>
-        <div className="invitation-rounds">{getRoundsLabel()}</div>
+        <div className="invitation-rounds">
+          {gameType === 'statki' ? '🚢 Statki · ' : ''}{inv.settingsDisplay}
+        </div>
         {invitations.length > 1 && (
           <div className="invitation-more">+{invitations.length - 1} więcej zaproszeń</div>
         )}
