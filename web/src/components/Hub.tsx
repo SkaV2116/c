@@ -5,6 +5,7 @@ import { logout, type Player } from '../lib/auth'
 
 interface Props {
   player: Player
+  onBack: () => void
   onWyraz: () => void
   onGwiazdki: () => void
   onKolko: () => void
@@ -12,7 +13,7 @@ interface Props {
   onLogout: () => void
 }
 
-export default function Hub({ player, onWyraz, onGwiazdki, onKolko, onStatki, onLogout }: Props) {
+export default function Hub({ player, onBack, onWyraz, onGwiazdki, onKolko, onStatki, onLogout }: Props) {
   const [showLogout, setShowLogout] = useState(false)
 
   const streak = loadStreak()
@@ -28,28 +29,33 @@ export default function Hub({ player, onWyraz, onGwiazdki, onKolko, onStatki, on
     onLogout()
   }
 
+  const displayName = player.username.length > 14
+    ? player.username.slice(0, 13) + '…'
+    : player.username
+
   return (
     <div className="screen hub">
       <div className="hub-topbar">
+        <button className="hub-back-to-podnik" onClick={onBack}>‹ Podręcznik</button>
         <div className="hub-player" onClick={() => setShowLogout(v => !v)}>
           <div className="hub-player-avatar">{player.username[0].toUpperCase()}</div>
           <div className="hub-player-info">
-            <div className="hub-player-name">{player.username}</div>
+            <div className="hub-player-name">{displayName}</div>
             <div className="hub-player-id">#{player.playerId}</div>
           </div>
         </div>
-        <div className="hub-date">{today}</div>
       </div>
 
       {showLogout && (
         <div className="hub-logout-bar">
-          <span className="hub-logout-hint">Zalogowany jako {player.username} #{player.playerId}</span>
+          <span className="hub-logout-hint">{player.email} #{player.playerId}</span>
           <button className="hub-logout-btn" onClick={handleLogout}>Wyloguj</button>
         </div>
       )}
 
       <div className="hub-header">
         <div className="hub-title">MiniGamesIQ</div>
+        <div className="hub-date">{today}</div>
       </div>
 
       <div className="hub-cards">

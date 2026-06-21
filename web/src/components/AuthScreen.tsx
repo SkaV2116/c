@@ -1,32 +1,47 @@
 import { useState } from 'react'
-import { register, login, type Player } from '../lib/auth'
+import { register, login, checkVerified, resendVerification, logout, type Player } from '../lib/auth'
 
 interface Props {
+  initialVerificationPending?: boolean
   onAuth: (player: Player) => void
 }
 
-type Mode = 'login' | 'register'
+type Mode = 'login' | 'register' | 'verify'
 
-export default function AuthScreen({ onAuth }: Props) {
-  const [mode, setMode] = useState<Mode>('login')
-  const [username, setUsername] = useState('')
+export default function AuthScreen({ initialVerificationPending, onAuth }: Props) {
+  const [mode, setMode] = useState<Mode>(initialVerificationPending ? 'verify' : 'login')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPw, setConfirmPw] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [resentSuccess, setResentSuccess] = useState(false)
 
-  const usernameValid = username.length >= 3 && username.length <= 20 && /^[a-zA-Z0-9_]+$/.test(username)
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   const passwordValid = password.length >= 8
-  const canSubmit = usernameValid && passwordValid && !loading
+  const confirmValid = mode !== 'register' || password === confirmPw
+  const canSubmit = emailValid && passwordValid && confirmValid && !loading
 
   const handleSubmit = async () => {
     if (!canSubmit) return
     setError(null)
     setLoading(true)
     try {
-      const player = mode === 'register'
-        ? await register(username.trim(), password)
-        : await login(username.trim(), password)
-      onAuth(player)
+      if (mode === 'register') {
+        await register(email.trim(), password)
+        setMode('verify')
+      } else {
+        try {
+          const player = await login(email.trim(), password)
+          onAuth(player)
+        } catch (e: any) {
+          if (e.message === 'UNVERIFIED') {
+            setMode('verify')
+          } else {
+            throw e
+          }
+        }
+      }
     } catch (e: any) {
       setError(e.message ?? 'Wystąpił błąd. Spróbuj ponownie.')
     } finally {
@@ -34,18 +49,101 @@ export default function AuthScreen({ onAuth }: Props) {
     }
   }
 
-  const switchMode = (m: Mode) => {
+  const handleCheckVerified = async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const player = await checkVerified()
+      if (player) {
+        onAuth(player)
+      } else {
+        setError('Email nie został jeszcze potwierdzony. Kliknij link w wiadomości.')
+      }
+    } catch {
+      setError('Błąd sprawdzania statusu. Spróbuj ponownie.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleResend = async () => {
+    setLoading(true)
+    setError(null)
+    setResentSuccess(false)
+    try {
+      await resendVerification()
+      setResentSuccess(true)
+    } catch (e: any) {
+      setError(e.message ?? 'Nie udało się wysłać emaila.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleBackToLogin = async () => {
+    await logout()
+    setMode('login')
+    setError(null)
+    setEmail('')
+    setPassword('')
+    setConfirmPw('')
+    setResentSuccess(false)
+  }
+
+  if (mode === 'verify') {
+    return (
+      <div className="screen auth-screen">
+        <div className="auth-logo">
+          <div className="auth-logo-icon">📬</div>
+          <div className="auth-logo-title">Podręcznik</div>
+        </div>
+
+        <div className="auth-card">
+          <div className="auth-verify-info">
+            <div className="auth-verify-title">Sprawdź swój email</div>
+            <div className="auth-verify-desc">
+              Wysłaliśmy link aktywacyjny na Twój adres. Kliknij go, a następnie wróć tutaj.
+            </div>
+          </div>
+
+          {resentSuccess && (
+            <div className="auth-success">Link wysłany ponownie — sprawdź skrzynkę.</div>
+          )}
+          {error && <div className="auth-error">{error}</div>}
+
+          <button
+            className={`auth-btn${loading ? ' auth-btn-disabled' : ''}`}
+            onClick={handleCheckVerified}
+            disabled={loading}
+          >
+            {loading ? 'Sprawdzam…' : 'Już potwierdziłem — zaloguj mnie'}
+          </button>
+
+          <button className="auth-link-btn" onClick={handleResend} disabled={loading}>
+            Wyślij link ponownie
+          </button>
+
+          <button className="auth-link-btn auth-link-btn-muted" onClick={handleBackToLogin}>
+            ← Wróć do logowania
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  const switchMode = (m: 'login' | 'register') => {
     setMode(m)
     setError(null)
-    setUsername('')
+    setEmail('')
     setPassword('')
+    setConfirmPw('')
   }
 
   return (
     <div className="screen auth-screen">
       <div className="auth-logo">
-        <div className="auth-logo-icon">🎮</div>
-        <div className="auth-logo-title">MiniGamesIQ</div>
+        <div className="auth-logo-icon">📖</div>
+        <div className="auth-logo-title">Podręcznik</div>
       </div>
 
       <div className="auth-card">
@@ -62,22 +160,18 @@ export default function AuthScreen({ onAuth }: Props) {
 
         <div className="auth-fields">
           <div className="auth-field-wrap">
-            <label className="auth-label">Login</label>
+            <label className="auth-label">Adres email</label>
             <input
               className="auth-input"
-              type="text"
+              type="email"
               autoCapitalize="none"
               autoCorrect="off"
-              autoComplete="username"
-              placeholder="min. 3 znaki, litery/cyfry/_"
-              value={username}
-              maxLength={20}
-              onChange={e => { setUsername(e.target.value); setError(null) }}
+              autoComplete="email"
+              placeholder="twoj@email.com"
+              value={email}
+              onChange={e => { setEmail(e.target.value); setError(null) }}
               onKeyDown={e => e.key === 'Enter' && handleSubmit()}
             />
-            {mode === 'register' && username.length > 0 && !usernameValid && (
-              <div className="auth-hint">3–20 znaków, tylko litery, cyfry i _</div>
-            )}
           </div>
 
           <div className="auth-field-wrap">
@@ -95,9 +189,33 @@ export default function AuthScreen({ onAuth }: Props) {
               <div className="auth-hint">Hasło musi mieć co najmniej 8 znaków</div>
             )}
           </div>
+
+          {mode === 'register' && (
+            <div className="auth-field-wrap">
+              <label className="auth-label">Potwierdź hasło</label>
+              <input
+                className="auth-input"
+                type="password"
+                autoComplete="new-password"
+                placeholder="powtórz hasło"
+                value={confirmPw}
+                onChange={e => { setConfirmPw(e.target.value); setError(null) }}
+                onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+              />
+              {confirmPw.length > 0 && !confirmValid && (
+                <div className="auth-hint">Hasła nie są identyczne</div>
+              )}
+            </div>
+          )}
         </div>
 
         {error && <div className="auth-error">{error}</div>}
+
+        {mode === 'register' && (
+          <div className="auth-register-info">
+            Wyślemy link aktywacyjny na Twój adres. Jeden adres = jedno konto.
+          </div>
+        )}
 
         <button
           className={`auth-btn${canSubmit ? '' : ' auth-btn-disabled'}`}

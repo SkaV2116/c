@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import PodręcznikHome from './components/PodręcznikHome'
 import Hub from './components/Hub'
 import WyrazView from './components/wyraz/WyrazView'
 import LevelSelect from './components/gwiazdki/LevelSelect'
@@ -15,11 +16,12 @@ import StatkiSetup from './components/statki/StatkiSetup'
 import StatkiGame from './components/statki/StatkiGame'
 import StatkiRanking from './components/statki/StatkiRanking'
 import InvitationListener from './components/InvitationListener'
-import { onAuthChange, loadPlayerProfile, type Player } from './lib/auth'
+import { onAuthChange, loadPlayerProfile, isEmailVerificationPending, type Player } from './lib/auth'
 import { setCurrentUid } from './lib/userStore'
 import { loadProgressFromFirestore } from './lib/gameSync'
 
 type Screen =
+  | { id: 'podnik' }
   | { id: 'hub' }
   | { id: 'wyraz' }
   | { id: 'gwiazdki-menu' }
@@ -36,7 +38,7 @@ type Screen =
   | { id: 'statki-ranking' }
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>({ id: 'hub' })
+  const [screen, setScreen] = useState<Screen>({ id: 'podnik' })
   const [player, setPlayer] = useState<Player | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
 
@@ -62,8 +64,8 @@ export default function App() {
     return (
       <div className="screen auth-screen">
         <div className="auth-logo">
-          <div className="auth-logo-icon">🎮</div>
-          <div className="auth-logo-title">MiniGamesIQ</div>
+          <div className="auth-logo-icon">📖</div>
+          <div className="auth-logo-title">Podręcznik</div>
         </div>
         <div className="auth-loading">Ładowanie…</div>
       </div>
@@ -74,15 +76,22 @@ export default function App() {
     setCurrentUid(p.uid)
     await loadProgressFromFirestore(p.uid)
     setPlayer(p)
+    setScreen({ id: 'podnik' })
   }
 
   if (!player) {
-    return <AuthScreen onAuth={handleAuth} />
+    return (
+      <AuthScreen
+        initialVerificationPending={isEmailVerificationPending()}
+        onAuth={handleAuth}
+      />
+    )
   }
 
   const go = (s: Screen) => setScreen(s)
   const back = () => {
-    if (screen.id === 'gwiazdki-game') setScreen({ id: 'gwiazdki-menu' })
+    if (screen.id === 'hub') setScreen({ id: 'podnik' })
+    else if (screen.id === 'gwiazdki-game') setScreen({ id: 'gwiazdki-menu' })
     else if (
       screen.id === 'kolko-local' ||
       screen.id === 'kolko-ai' ||
@@ -95,7 +104,13 @@ export default function App() {
       screen.id === 'statki-game' ||
       screen.id === 'statki-ranking'
     ) setScreen({ id: 'statki-menu' })
-    else setScreen({ id: 'hub' })
+    else if (
+      screen.id === 'kolko-menu' ||
+      screen.id === 'gwiazdki-menu' ||
+      screen.id === 'wyraz' ||
+      screen.id === 'statki-menu'
+    ) setScreen({ id: 'hub' })
+    else setScreen({ id: 'podnik' })
   }
 
   return (
@@ -109,10 +124,20 @@ export default function App() {
       />
       {(() => {
         switch (screen.id) {
+          case 'podnik':
+            return (
+              <PodręcznikHome
+                player={player}
+                onApp={(id) => {
+                  if (id === 'minigamesiq') go({ id: 'hub' })
+                }}
+              />
+            )
           case 'hub':
             return (
               <Hub
                 player={player}
+                onBack={() => go({ id: 'podnik' })}
                 onWyraz={() => go({ id: 'wyraz' })}
                 onGwiazdki={() => go({ id: 'gwiazdki-menu' })}
                 onKolko={() => go({ id: 'kolko-menu' })}
@@ -137,7 +162,7 @@ export default function App() {
             return (
               <KolkoMenu
                 player={player}
-                onBack={() => go({ id: 'hub' })}
+                onBack={back}
                 onLocalGame={() => go({ id: 'kolko-local' })}
                 onAIGame={() => go({ id: 'kolko-ai' })}
                 onOnline={() => go({ id: 'kolko-online-setup' })}
@@ -175,7 +200,7 @@ export default function App() {
             return (
               <StatkiMenu
                 player={player}
-                onBack={() => go({ id: 'hub' })}
+                onBack={back}
                 onSetup={() => go({ id: 'statki-setup' })}
                 onRanking={() => go({ id: 'statki-ranking' })}
               />
