@@ -1,21 +1,16 @@
-import { useState } from 'react'
 import { loadStreak, loadBoard, todayKey } from '../games/wyraz'
 import { loadCompleted } from '../games/gwiazdki'
-import { logout, type Player } from '../lib/auth'
 
 interface Props {
-  player: Player
+  player?: unknown
   onBack: () => void
   onWyraz: () => void
   onGwiazdki: () => void
   onKolko: () => void
   onStatki: () => void
-  onLogout: () => void
 }
 
-export default function Hub({ player, onBack, onWyraz, onGwiazdki, onKolko, onStatki, onLogout }: Props) {
-  const [showLogout, setShowLogout] = useState(false)
-
+export default function Hub({ onBack, onWyraz, onGwiazdki, onKolko, onStatki }: Props) {
   const streak = loadStreak()
   const board = loadBoard()
   const completedToday = board?.gameState !== 'playing' && board?.dateKey === todayKey()
@@ -24,38 +19,15 @@ export default function Hub({ player, onBack, onWyraz, onGwiazdki, onKolko, onSt
 
   const today = new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' })
 
-  const handleLogout = async () => {
-    await logout()
-    onLogout()
-  }
-
-  const displayName = player.username.length > 14
-    ? player.username.slice(0, 13) + '…'
-    : player.username
-
   return (
     <div className="screen hub">
       <div className="hub-topbar">
-        <button className="hub-back-to-podnik" onClick={onBack}>‹ Podręcznik</button>
-        <div className="hub-player" onClick={() => setShowLogout(v => !v)}>
-          <div className="hub-player-avatar">{player.username[0].toUpperCase()}</div>
-          <div className="hub-player-info">
-            <div className="hub-player-name">{displayName}</div>
-            <div className="hub-player-id">#{player.playerId}</div>
-          </div>
-        </div>
+        <button className="hub-back-to-podnik" onClick={onBack}>‹ Pod–ręcznik</button>
+        <div className="hub-date-inline">{today}</div>
       </div>
-
-      {showLogout && (
-        <div className="hub-logout-bar">
-          <span className="hub-logout-hint">{player.email} #{player.playerId}</span>
-          <button className="hub-logout-btn" onClick={handleLogout}>Wyloguj</button>
-        </div>
-      )}
 
       <div className="hub-header">
         <div className="hub-title">MiniGamesIQ</div>
-        <div className="hub-date">{today}</div>
       </div>
 
       <div className="hub-cards">

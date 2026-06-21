@@ -131,6 +131,7 @@ export default function App() {
                 onApp={(id) => {
                   if (id === 'minigamesiq') go({ id: 'hub' })
                 }}
+                onLogout={() => setPlayer(null)}
               />
             )
           case 'hub':
@@ -142,7 +143,6 @@ export default function App() {
                 onGwiazdki={() => go({ id: 'gwiazdki-menu' })}
                 onKolko={() => go({ id: 'kolko-menu' })}
                 onStatki={() => go({ id: 'statki-menu' })}
-                onLogout={() => setPlayer(null)}
               />
             )
           case 'wyraz':
