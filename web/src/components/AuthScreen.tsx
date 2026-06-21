@@ -95,7 +95,7 @@ export default function AuthScreen({ initialVerificationPending, onAuth }: Props
       <div className="screen auth-screen">
         <div className="auth-logo">
           <div className="auth-logo-icon">📬</div>
-          <div className="auth-logo-title">Podręcznik</div>
+          <div className="auth-logo-title">Pod-Ręcznik</div>
         </div>
 
         <div className="auth-card">
@@ -143,7 +143,7 @@ export default function AuthScreen({ initialVerificationPending, onAuth }: Props
     <div className="screen auth-screen">
       <div className="auth-logo">
         <div className="auth-logo-icon">📖</div>
-        <div className="auth-logo-title">Podręcznik</div>
+        <div className="auth-logo-title">Pod-Ręcznik</div>
       </div>
 
       <div className="auth-card">

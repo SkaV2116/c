@@ -65,7 +65,7 @@ export default function App() {
       <div className="screen auth-screen">
         <div className="auth-logo">
           <div className="auth-logo-icon">📖</div>
-          <div className="auth-logo-title">Podręcznik</div>
+          <div className="auth-logo-title">Pod-Ręcznik</div>
         </div>
         <div className="auth-loading">Ładowanie…</div>
       </div>

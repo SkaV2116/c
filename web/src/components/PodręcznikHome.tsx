@@ -38,7 +38,7 @@ export default function PodręcznikHome({ player, onApp, onLogout }: Props) {
   return (
     <div className="screen podnik-screen">
       <div className="podnik-topbar">
-        <span className="podnik-brand">Pod–ręcznik</span>
+        <span className="podnik-brand">Pod-Ręcznik</span>
         <div className="podnik-player" onClick={() => setShowLogout(v => !v)}>
           <div className="podnik-player-avatar">{player.username[0].toUpperCase()}</div>
           <div className="podnik-player-info">
@@ -60,7 +60,7 @@ export default function PodręcznikHome({ player, onApp, onLogout }: Props) {
           <div
             key={app.id}
             className="podnik-icon-wrap"
-            onPointerDown={() => onApp(app.id)}
+            onClick={() => onApp(app.id)}
           >
             <div
               className="podnik-icon"

@@ -22,7 +22,7 @@ export default function Hub({ onBack, onWyraz, onGwiazdki, onKolko, onStatki }: 
   return (
     <div className="screen hub">
       <div className="hub-topbar">
-        <button className="hub-back-to-podnik" onClick={onBack}>‹ Pod–ręcznik</button>
+        <button className="hub-back-to-podnik" onClick={onBack}>‹ Pod-Ręcznik</button>
         <div className="hub-date-inline">{today}</div>
       </div>
 
